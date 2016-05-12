@@ -92,7 +92,7 @@ mutex
 // doesn't "block"
 mutex.tryLock().then((obtainedLock) => {
   if (obtainedLock) {
-    return doSomething().then(() => mutex.release())
+    return doSomething().then(() => mutex.unlock())
   } else {
     throw new Error('failed to obtain lock')
   }
