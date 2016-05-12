@@ -7,11 +7,11 @@ Distributed locking using [PostgreSQL advisory locks](http://www.postgresql.org/
 Some use cases:
 
 - You have a ["clock process"](https://devcenter.heroku.com/articles/scheduled-jobs-custom-clock-processes)
-  and want to make absolutely sure only one process will never be more
-  than one process running (this could happen if you scale up the
-  process by accident or through a zero downtime deploy mechanism that
-  keeps the old version of the process running while the new one is
-  starting).
+  and want to make absolutely sure there will never be more than one
+  process active at any given time. This sort of situation could
+  otherwise happen if you scale up the process by accident or through a
+  zero downtime deploy mechanism that keeps the old version of the
+  process running while the new one is starting.
 
 - You run an Express based web app and want to post a message to Slack
   every 30 mins containing some stats (new registrations in last 30 mins
