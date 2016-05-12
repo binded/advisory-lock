@@ -13,7 +13,7 @@ test('strToKey', (t) => {
   t.end()
 })
 
-test.skip('lock/unlock on same connection', (t) => {
+test('lock/unlock on same connection', (t) => {
   t.plan(3)
 
   const getMutex = advisoryLock(conString)
@@ -43,7 +43,7 @@ test.skip('lock/unlock on same connection', (t) => {
   // we can acquire lock both times because we're using the same connection
 })
 
-test.skip('lock/unlock on different connections', (t) => {
+test('lock/unlock on different connections', (t) => {
   t.plan(5)
 
   let i = 0
@@ -68,7 +68,7 @@ test.skip('lock/unlock on different connections', (t) => {
   testLockUnlock(advisoryLock(conString)('test-lock'))
 })
 
-test.skip('tryLock', (t) => {
+test('tryLock', (t) => {
   const mutex1 = advisoryLock(conString)('test-try-lock')
   const mutex2 = advisoryLock(conString)('test-try-lock')
   mutex1.tryLock()
@@ -93,7 +93,7 @@ test.skip('tryLock', (t) => {
     .catch(t.fail)
 })
 
-test.skip('withLock followed by tryLock', (t) => {
+test('withLock followed by tryLock', (t) => {
   const mutex1 = advisoryLock(conString)('test-withlock-lock')
   const mutex2 = advisoryLock(conString)('test-withlock-lock')
   mutex1
@@ -111,7 +111,7 @@ test.skip('withLock followed by tryLock', (t) => {
     .catch(t.fail)
 })
 
-test.skip('withLock - no promise', (t) => {
+test('withLock - no promise', (t) => {
   const mutex1 = advisoryLock(conString)('test-withlock-lock')
   mutex1
     .withLock(() => ('someval'))
