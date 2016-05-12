@@ -26,8 +26,9 @@ npm install --save advisory-lock
 - `connectionString` must be a Postgres connection string
 - `lockName` must be a unique identifier for the lock
 
-Returns a **mutex** object containing the following Promise returning
-functions:
+Returns a **mutex** object containing the Promise returning
+functions listed below. For a better understanding of what they do,
+see [PosgtreSQL's manual](http://www.postgresql.org/docs/current/static/functions-admin.html#FUNCTIONS-ADVISORY-LOCKS).
 
 #### withLock(fn)
 
@@ -88,7 +89,6 @@ mutex
     // lock is released now...
   })
 
-
 // doesn't "block"
 mutex.tryLock().then((obtainedLock) => {
   if (obtainedLock) {
@@ -102,7 +102,7 @@ mutex.tryLock().then((obtainedLock) => {
 
 See [./test](./test) for more usage examples.
 
- ## TODO
+## Roadmap
 
 pgmutex binary which waits for exclusive lock before starting process
 passed as argument. e.g: `pgmutex ./path/to/worker`
