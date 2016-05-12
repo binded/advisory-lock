@@ -102,3 +102,8 @@ mutex.tryLock().then((obtainedLock) => {
 
 See [./test](./test) for more usage examples.
 
+ ## TODO
+
+pgmutex binary which waits for exclusive lock before starting process
+passed as argument. e.g: `pgmutex ./path/to/worker`
+
