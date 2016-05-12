@@ -1,0 +1,6 @@
+src/
+test/
+.travis.yml
+.babelrc
+.eslintrc
+.envrc

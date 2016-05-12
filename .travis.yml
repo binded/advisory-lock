@@ -1,0 +1,10 @@
+# todo: setup postgres db
+sudo: false
+language: node_js
+notifications:
+  email: false
+node_js:
+  - 6
+  - 5
+  - 4
+  - '0.10'
