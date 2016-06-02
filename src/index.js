@@ -104,8 +104,14 @@ export default (conString) => {
       .resolve()
       .then(fn)
       .then(
-        (res) => unlock().then(() => res),
-        (err) => unlock().then(() => { throw err })
+        (res) => unlock().then(() => {
+          client.end()
+          return res
+        }),
+        (err) => unlock().then(() => {
+          client.end()
+          throw err
+        })
       )
     )
 

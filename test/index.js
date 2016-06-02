@@ -183,19 +183,15 @@ test('withLock releases connection after unlocking', (t) => {
     advisoryLock(conString)('test-withlock-release')
   )
 
-  for (let i = 0; i < 50; i++) {
-    getMutex().withLock().then(() => {
-      getActiveConnections().then((conns) => {
-        console.log(conns)
+  getActiveConnections().then((startConnectionCount) => {
+    for (let i = 0; i < 25; i++) {
+      getMutex().withLock().catch(t.fail)
+    }
+    timeout(500).then(() => {
+      getActiveConnections().then((connectionCount) => {
+        t.equal(connectionCount, startConnectionCount)
+        t.end()
       })
-    }).catch(t.fail)
-  }
-
-  timeout(30000).then(() => {
-    getActiveConnections().then((conns) => {
-      console.log('=-=-=-=-=-=-=-')
-      console.log(conns)
-      t.end()
     })
   })
 })
