@@ -11,7 +11,7 @@
     "preversion": "npm test",
     "postversion": "npm run build",
     "test": "npm run test:quick",
-    "test:quick": "babel-tape-runner test/*.js",
+    "test:quick": "babel-tape-runner test/*.test.js",
     "dev": "nodemon --exec npm -- run test:quick",
     "docker": "blockai-dc && docker-compose up dbcreate"
   },

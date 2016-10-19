@@ -92,7 +92,7 @@ export default (conString) => {
   const waitForConnection = initWaitForConnection(client)
   // TODO: client.connection.stream.unref()?
 
-  return (name) => {
+  const createMutex = (name) => {
     const key = typeof name === 'string' ? strToKey(name) : name
 
     const lock = () => query(client, 'pg_advisory_lock', key)
@@ -120,4 +120,6 @@ export default (conString) => {
     })
     return guardedFns
   }
+  createMutex.client = client
+  return createMutex
 }

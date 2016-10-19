@@ -1,11 +1,7 @@
 import test from 'tape'
 
 import advisoryLock, { strToKey } from '../src'
-
-const conString = process.env.PG_CONNECTION_STRING
-  || 'postgres://postgres@127.0.0.1/advisorylock'
-
-const timeout = (ms = 300) => new Promise((resolve) => setTimeout(resolve, ms))
+import { conString, timeout } from './common'
 
 test('strToKey', (t) => {
   const key = strToKey('test-lock')
