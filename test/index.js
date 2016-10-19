@@ -3,7 +3,7 @@ import test from 'tape'
 import advisoryLock, { strToKey } from '../src'
 
 const conString = process.env.PG_CONNECTION_STRING
-  || 'postgres://postgres@192.168.99.100/advisorylock'
+  || 'postgres://postgres@127.0.0.1/advisorylock'
 
 const timeout = (ms = 300) => new Promise((resolve) => setTimeout(resolve, ms))
 

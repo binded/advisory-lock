@@ -1,12 +1,7 @@
-db:
-  image: postgres:9.3
-  ports:
-    - "5432:5432"
-
 dbcreate:
   image: postgres:9.3
-  links:
-    - db
+  external_links:
+    - blockai_postgres_1:db
   command: >
     /bin/bash -c "
       while ! psql --host=db --username=postgres; do sleep 1; done;
