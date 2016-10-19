@@ -1,3 +1,4 @@
+import pg from 'pg'
 import test from 'tape'
 
 import advisoryLock, { strToKey } from '../src'
@@ -6,6 +7,20 @@ const conString = process.env.PG_CONNECTION_STRING
   || 'postgres://postgres@127.0.0.1/advisorylock'
 
 const timeout = (ms = 300) => new Promise((resolve) => setTimeout(resolve, ms))
+
+// Returns the number of active connections to the database
+const getActiveConnections = () => new Promise((resolve, reject) => {
+  const sql = 'SELECT count(*) FROM pg_stat_activity'
+  const client = new pg.Client(conString)
+  client.connect((connectError) => {
+    if (connectError) return reject(connectError)
+    client.query(sql, (queryError, result) => {
+      if (queryError) return reject(queryError)
+      resolve(Number(result.rows[0].count))
+      client.end()
+    })
+  })
+})
 
 test('strToKey', (t) => {
   const key = strToKey('test-lock')
@@ -162,5 +177,24 @@ test('withLock blocks until lock available', (t) => {
     .then(maybeDone)
     .catch(t.fail)
 })
+
+test('withLock releases connection after unlocking', (t) => {
+  const getMutex = () => (
+    advisoryLock(conString)('test-withlock-release')
+  )
+
+  getActiveConnections().then((startConnectionCount) => {
+    for (let i = 0; i < 25; i++) {
+      getMutex().withLock().catch(t.fail)
+    }
+    timeout(500).then(() => {
+      getActiveConnections().then((connectionCount) => {
+        t.equal(connectionCount, startConnectionCount)
+        t.end()
+      })
+    })
+  })
+})
+
 
 // TODO: test thowing inside critical section unlocks mutex
