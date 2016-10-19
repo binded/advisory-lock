@@ -13,6 +13,8 @@ Some use cases:
   zero downtime deploy mechanism that keeps the old version of the
   process running while the new one is starting.
 
+- Running database migration at startup
+
 - You run an Express based web app and want to post a message to Slack
   every 30 mins containing some stats (new registrations in last 30 mins
   for example). You might have 10 web server processes running but don't
