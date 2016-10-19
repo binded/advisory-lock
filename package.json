@@ -3,6 +3,9 @@
   "version": "1.0.2",
   "description": "Distributed locking using PostgreSQL advisory locks",
   "main": "lib/index.js",
+  "bin": {
+    "withlock": "./lib/bin/withlock.js"
+  },
   "scripts": {
     "pretest": "npm run lint",
     "build": "babel ./src --out-dir ./lib --copy-files",
@@ -48,6 +51,7 @@
   },
   "dependencies": {
     "debug": "^2.2.0",
+    "minimist": "^1.2.0",
     "pg": "^4.5.5"
   }
 }

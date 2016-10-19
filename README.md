@@ -29,6 +29,30 @@ Some use cases:
 npm install --save advisory-lock
 ```
 
+## CLI Usage
+
+A `withlock` command line utility is provided to make to facilitate the
+common use case of ensuring only one instance of a process is running at any
+time.
+
+![withlock demo](./withlock-demo.gif)
+
+```bash
+withlock <lockName> [--db <connectionString>] -- <command>
+```
+
+Where `<lockName>` is the name of the lock, `<command>` (everything after
+`--`) is the command to run exclusively, once the lock is acquired.
+`--db <connectionString>` is optional and if not specified, the
+`PG_CONNECTION_STRING` environment variable will be used.
+
+Example:
+
+```bash
+export PG_CONNECTION_STRING="postgres://postgres@127.0.0.1/mydb"
+withlock dbmigration -- npm run knex migrate:latest
+```
+
 ## Usage
 
 ### advisoryLock(connectionString)
