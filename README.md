@@ -2,26 +2,34 @@
 
 [![Build Status](https://travis-ci.org/blockai/advisory-lock.svg?branch=master)](https://travis-ci.org/blockai/advisory-lock)
 
-Distributed locking using [PostgreSQL advisory locks](http://www.postgresql.org/docs/current/static/explicit-locking.html#ADVISORY-LOCKS).
+Distributed* locking using [PostgreSQL advisory locks](http://www.postgresql.org/docs/current/static/explicit-locking.html#ADVISORY-LOCKS).
 
 Some use cases:
 
-- You have a ["clock process"](https://devcenter.heroku.com/articles/scheduled-jobs-custom-clock-processes)
-  and want to make absolutely sure there will never be more than one
-  process active at any given time. This sort of situation could
-  otherwise happen if you scale up the process by accident or through a
-  zero downtime deploy mechanism that keeps the old version of the
-  process running while the new one is starting.
+- You have a [clock process](https://devcenter.heroku.com/articles/scheduled-jobs-custom-clock-processes)
+    and want to make absolutely sure there will never be more than one
+    process active at any given time.
 
-- Running database migration when app starts
+    This sort of situation can otherwise arise if the clock process is
+    scaled up by accident or during a deployment which keeps the old
+    version running until the new version responds to a health check.
 
-- You run an Express based web app and want to post a message to Slack
-  every 30 mins containing some stats (new registrations in last 30 mins
-  for example). You might have 10 web server processes running but don't
-  want to get X messages in Slack (only one is enough). You can use this
-  library to elect a "master" process which sends the messages.
+- Running a database migration at server startup. If your app is scaled,
+    multiple processes will simultaneously try to run the database
+    migration which can lead to problems.
 
-- [etc.](http://lmgtfy.com/?q=distributed%20lock)
+- Leader election. Let's say you have a web app and want to post a
+    message to Slack every 30 mins containing some statistic (e.g. new
+    registrations in the last 30 mins). You might have 10 processes
+    running but don't want to get 10 identical messages in Slack.
+    You can use this library to elect a "master" process which
+    is responsible for sending the message.
+
+- [etc.](https://www.google.com/?q=distributed+lock#newwindow=1&q=distributed+lock)
+
+\* Your PostgreSQL database being a central point of failure. For
+    a high available distributed lock, have a look at
+    [ZooKeeper](https://zookeeper.apache.org).
 
 ## Install
 
