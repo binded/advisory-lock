@@ -5,7 +5,7 @@ import { conString, timeout } from './common'
 
 test('strToKey', (t) => {
   const key = strToKey('test-lock')
-  t.deepEqual(key, [-107789403, 1811518275], 'generates 2 integer key from string')
+  t.deepEqual(key, [-107789403, -1898803861], 'generates 2 integer key from string')
   t.end()
 })
 

@@ -12,7 +12,9 @@ export const strToKey = (name) => {
   // Generate sha256 hash of name
   // and take 32 bit twice from hash
   const buf = createHash('sha256').update(name).digest()
-  return [buf.readInt32LE(0), buf.readInt32LE(1)]
+  // Read the first 4 bytes and the next 4 bytes
+  // The parameter here is the byte offset, not the sizeof(int32) offset
+  return [buf.readInt32LE(0), buf.readInt32LE(4)]
 }
 
 // Patches client so that unref works as expected... Node terminates
